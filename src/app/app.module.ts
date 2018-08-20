@@ -15,8 +15,10 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AlertService, AuthenticationService, UserService } from './_services';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
-import { RegisterComponent } from './register';;
-import { NavbarComponent } from './navigation/navbar/navbar.component'
+import { RegisterComponent } from './register';
+import { NavbarComponent } from './navigation/navbar/navbar.component';
+import { StructureComponent } from './structure/structure.component';
+import { SensorComponent } from './sensor/sensor.component'
 
 @NgModule({
     imports: [
@@ -32,7 +34,9 @@ import { NavbarComponent } from './navigation/navbar/navbar.component'
         LoginComponent,
         RegisterComponent
 ,
-        NavbarComponent    ],
+        NavbarComponent ,
+        StructureComponent ,
+        SensorComponent  ],
     providers: [
         AuthGuard,
         AlertService,
