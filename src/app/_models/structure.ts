@@ -1,7 +1,12 @@
 export class Structure {
-    name: string;
-    commentary: string;
-    create_date: Date;
-    latitude: number;
-    longitude: number;
+    constructor(
+        public id: number,
+        public name: string = "",
+        public create_date: Date, 
+        public commentary: string = "",
+        public latitude: number = 0,
+        public longitude: number = 0
+    ) {
+        
+    }
 }
