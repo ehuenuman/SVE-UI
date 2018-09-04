@@ -32,8 +32,7 @@ import { SensorComponent } from './sensor/sensor.component'
         AlertComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
-,
+        RegisterComponent,
         NavbarComponent ,
         StructureComponent ,
         SensorComponent  ],
