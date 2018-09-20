@@ -20,9 +20,9 @@ export class StructureComponent implements OnInit {
   structure: Structure;
   structures: Structure[];
 
-  getStructures() {
+  /*getStructures() {
     this._structureService.getStructures()
       .subscribe(data => this.structures = data)
-  }
+  }*/
 
 }
