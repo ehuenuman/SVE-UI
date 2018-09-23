@@ -1,40 +1,39 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
 
 import { User, Structure } from '../_models';
-import { UserService } from '../_services';
-import { StructureService } from '../_services';
+import { StructureService, AuthenticationService } from '../_services';
+
+
 
 @Component({templateUrl: 'home.component.html'})
-
 export class HomeComponent implements OnInit {
 
-    currentUser: User;
-    users: User[] = [];
-    structures: Structure[] = [];
+  private structures: Structure[] = [];
+  private currentUser: User;
 
-    constructor(
-        //private userService: UserService,
-        private structureService: StructureService) {
-            //this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        }   
-
-    ngOnInit() {
-        this.loadAllStructures();
+  constructor(
+    private auth: AuthenticationService,
+    private structureService: StructureService) {
+      this.currentUser = this.auth.getUserDetails();
     }
 
-    /**
-    deleteUser(id: number) {
-        this.userService.delete(id).pipe(first()).subscribe(() => { 
-            this.loadAllStructures() 
-        });
-    }
-     */
+  ngOnInit() {
+    this.loadAllStructures();
+  }
 
-    private loadAllStructures() {
-        this.structureService.getAll().pipe(first()).subscribe(structures => { 
-            this.structures = structures; 
-            console.log(structures);
-        });
-    }
+  private loadAllStructures() {
+    this.structureService.getAll().subscribe(
+      structures => {
+        if (structures.error) {
+          console.log("Error: ", structures.error )
+        } else {
+          this.structures = structures.response[0];
+          console.log(this.structures);
+        }
+      },
+      error => {
+        console.log("Error", error);
+      }
+    );
+  }
 }
