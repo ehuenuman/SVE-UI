@@ -6,18 +6,38 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { Structure } from '../_models';
+import { AuthenticationService, TokenPayload } from './authentication.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+var httpOptions;
 
 @Injectable({providedIn: 'root'})
 export class StructureService {
-    constructor(private http: HttpClient) { }
-
-    getAll(): Observable<Structure[]> {
-        return this.http.get<Structure[]>(`${environment.apiUrl}/structure`);
+  constructor(
+    private http: HttpClient,
+    private auth: AuthenticationService) {
+      httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer '+ this.auth.getToken()
+        })
+      };
     }
+
+
+    private request(method: 'post', resource): Observable<any> {
+      return this.http.post(environment.apiUrl + resource, "", httpOptions);
+
+      /*const request = base.pipe(
+        map((data) => {
+          data.
+        })
+      );
+      console.log(request);
+      return request;*/
+    }
+
+    public getAll(): Observable<any> {
+      return this.request('post', '/structure');
+  }
 
     /**
     getById(id: number) {
