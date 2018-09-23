@@ -1,4 +1,5 @@
 export class Structure {
+    id: number;
     name: string;
     latitude: string;
     longitude: string;
@@ -9,4 +10,6 @@ export class Structure {
     date_joined: Date;
     photo: string;
     commentary: string;
+    enterprise_id: number;
+    region_id: number;    
 }
