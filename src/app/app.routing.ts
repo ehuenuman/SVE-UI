@@ -8,11 +8,11 @@ import { StructureComponent } from './structure';
 import { SensorComponent } from './sensor';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'structure', component: StructureComponent},
-    { path: 'sensor', component: SensorComponent},
+    { path: '', component: LoginComponent },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    //{ path: 'register', component: RegisterComponent },
+    { path: 'structure', component: StructureComponent , canActivate: [AuthGuard] },
+    { path: 'sensor', component: SensorComponent , canActivate: [AuthGuard] },
     
 
     // otherwise redirect to home
