@@ -15,7 +15,11 @@ export class LoginComponent  {
 
   constructor(
     private router: Router,
-    private auth: AuthenticationService) {}
+    private auth: AuthenticationService) {
+      if ( auth.isLoggedIn() ) {
+        this.router.navigateByUrl('/home');
+      }
+    }
 
   login() {
     this.auth.login(this.credentials).subscribe(() => {
