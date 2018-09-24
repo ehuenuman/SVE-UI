@@ -11,5 +11,7 @@ export class Structure {
     photo: string;
     commentary: string;
     enterprise_id: number;
-    region_id: number;    
+    region_id: number;
+    adv_count: number;
+    ale_count: number; 
 }
