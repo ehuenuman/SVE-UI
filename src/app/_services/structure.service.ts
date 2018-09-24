@@ -14,16 +14,15 @@ var httpOptions;
 export class StructureService {
   constructor(
     private http: HttpClient,
-    private auth: AuthenticationService) {
+    private auth: AuthenticationService) { }
+
+
+    private request(method: 'post', resource): Observable<any> {
       httpOptions = {
         headers: new HttpHeaders({
           'Authorization': 'Bearer '+ this.auth.getToken()
         })
       };
-    }
-
-
-    private request(method: 'post', resource): Observable<any> {
       return this.http.post(environment.apiUrl + resource, "", httpOptions);
 
       /*const request = base.pipe(
