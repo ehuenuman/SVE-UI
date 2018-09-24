@@ -8,7 +8,12 @@
   <div class="d-flex">
     <div class="col-sm-3">
       <div class="d-flex flex-column">
-        <div class="btn btn-success m-1" *ngFor="let structure of structures" [routerLink]="['/structure']">{{ structure.name }}</div>      
+        <div class="btn m-1" 
+          *ngFor="let structure of structures" 
+          [routerLink]="['/structure']" 
+          [ngClass]="{'btn-success': structure.adv_count == 0 && structure.ale_count == 0, 'btn-warning': structure.adv_count > 0, 'btn-danger': structure.ale_count > 0}">
+            {{ structure.name }}
+        </div>
       </div>
     </div>
     <div class="col">
