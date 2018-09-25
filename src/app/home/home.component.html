@@ -10,7 +10,7 @@
       <div class="d-flex flex-column">
         <div class="btn m-1" 
           *ngFor="let structure of structures" 
-          [routerLink]="['/structure']" 
+          [routerLink]="['/structure', structure.id]" 
           [ngClass]="{'btn-success': structure.adv_count == 0 && structure.ale_count == 0, 'btn-warning': structure.adv_count > 0, 'btn-danger': structure.ale_count > 0}">
             {{ structure.name }}
         </div>
