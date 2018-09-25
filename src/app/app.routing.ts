@@ -12,7 +12,8 @@ const appRoutes: Routes = [
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     //{ path: 'register', component: RegisterComponent },
     { path: 'structure', component: StructureComponent , canActivate: [AuthGuard] },
-    { path: 'sensor', component: SensorComponent , canActivate: [AuthGuard] },
+    //{ path: 'structure/:structure_id', component: StructureComponent , canActivate: [AuthGuard] },
+    { path: 'structure/:structure_id', component: StructureComponent , canActivate: [AuthGuard], children: [{ path: 'sensor/:sensor_id', component: SensorComponent}] },
     
 
     // otherwise redirect to home
