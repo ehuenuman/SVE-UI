@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { StructureService } from '../_services/structure.service'
-import { Structure } from '../_models';
+import { StructureService, SensorService } from '../_services'
+
+import { Structure, Sensor } from '../_models';
 
 @Component({
   selector: 'app-structure',
@@ -9,20 +11,30 @@ import { Structure } from '../_models';
   styleUrls: ['./structure.component.css']
 })
 export class StructureComponent implements OnInit {
+  structure: Structure;
+  sensors: Sensor[] = [];
 
   constructor(
-    private _structureService: StructureService
+    private route: ActivatedRoute,
+    private structureService: StructureService,
+    private sensorService: SensorService
   ) { }
 
   ngOnInit() {
+    this.getStructure();
+    this.getSensors();
   }
 
-  structure: Structure;
-  structures: Structure[];
+  getStructure(): void {
+    const id = +this.route.snapshot.paramMap.get('structure_id');
+    this.structureService.getStructure(id)
+      .subscribe(structure => this.structure = structure);
+  }
 
-  /*getStructures() {
-    this._structureService.getStructures()
-      .subscribe(data => this.structures = data)
-  }*/
+  getSensors(): void {
+    const id = +this.route.snapshot.paramMap.get('structure_id');
+    this.sensorService.getSensors(id)
+      .subscribe(sensors => this.sensors = sensors);
+  }
 
 }
