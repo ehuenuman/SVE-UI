@@ -17,26 +17,27 @@ export class StructureService {
     private auth: AuthenticationService) { }
 
 
-    private request(method: 'post', resource): Observable<any> {
+    private request(method: 'get'|'post', resource): Observable<any> {
       httpOptions = {
         headers: new HttpHeaders({
           'Authorization': 'Bearer '+ this.auth.getToken()
         })
       };
-      return this.http.post(environment.apiUrl + resource, "", httpOptions);
-
-      /*const request = base.pipe(
-        map((data) => {
-          data.
-        })
-      );
-      console.log(request);
-      return request;*/
+      if (method === 'post') {
+        console.log(httpOptions.headers);
+        return this.http.post(environment.apiUrl + resource, "", httpOptions);
+      } else if (method === 'get') {
+        return this.http.get(environment.apiUrl + resource, httpOptions);
+      }
     }
 
     public getAll(): Observable<any> {
       return this.request('post', '/structure');
-  }
+    }
+
+    public getStructure(id: number): Observable<any> {
+      return this.request('get', '/structure/'+id);
+    }
 
     /**
     getById(id: number) {
