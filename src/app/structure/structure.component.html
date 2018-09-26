@@ -1,9 +1,7 @@
 <app-navbar></app-navbar>
 <div class="content col-xxl-6 offset-xxl-3 col-xl-8 offset-xl-2">
   <div class="d-flex justify-content-center mb-4">
-    <h2>
-      Nombre Estructura
-    </h2>
+    <h2>{{ structure.name }}</h2>
   </div>
 
   <div class="d-flex mb-4">
@@ -14,10 +12,12 @@
       <div class="card-body d-flex">
         <div class="col-sm-4">              
           <ul class="list-group list-group list-group-flush">
-            <a class="list-group-item list-group-item-warning" [routerLink]="['/sensor']">Sensor 1</a>
-            <a class="list-group-item list-group-item-danger" [routerLink]="['/sensor']">Sensor 2</a>
-            <a class="list-group-item list-group-item-success" [routerLink]="['/sensor']">Sensor 3</a>
-            <a class="list-group-item list-group-item-success" [routerLink]="['/sensor']">Sensor 4</a>
+            <a class="list-group-ite" 
+              *ngFor="let sensor of sensors" 
+              [routerLink]="['/sensor', sensor.id]" 
+              [ngClass]="{'list-group-item-success': sensor.adv_count == 0 && sensor.ale_count == 0, 'list-group-item-warning': sensor.adv_count > 0, 'list-group-item-danger': sensor.ale_count > 0}">
+                {{ sensor.name }}
+            </a>
           </ul>
         </div>
         <div class="col">
@@ -35,10 +35,10 @@
       <div class="card-body">
         <div class="d-flex">
           <div class="col-sm-4">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Fecha ingreso</li>
+            <ul class="list-group list-group-flush">              
+              <li class="list-group-item">Fecha ingreso: {{ structure.date_joined }}</li>
               <li class="list-group-item">Región</li>
-              <li class="list-group-item">Comentario</li>
+              <li [hidden]="!structure.commentary" class="list-group-item">Comentario: {{structure.commentary}}</li>
             </ul>
           </div>
           <div class="col">
@@ -49,6 +49,5 @@
         </div>
       </div>
     </div>
-  </div>
-  
+  </div>  
 </div>

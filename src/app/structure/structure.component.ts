@@ -28,13 +28,13 @@ export class StructureComponent implements OnInit {
   getStructure(): void {
     const id = +this.route.snapshot.paramMap.get('structure_id');
     this.structureService.getStructure(id)
-      .subscribe(structure => this.structure = structure);
+      .subscribe(structure => this.structure = structure.response);
   }
 
   getSensors(): void {
     const id = +this.route.snapshot.paramMap.get('structure_id');
     this.sensorService.getSensors(id)
-      .subscribe(sensors => this.sensors = sensors);
+      .subscribe(sensors => this.sensors = sensors.response);
   }
 
 }
