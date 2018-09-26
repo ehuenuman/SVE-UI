@@ -49,7 +49,7 @@ export class AuthenticationService {
   public getToken(): string {
     if (!this.token) {
       this.token = localStorage.getItem('mean-token');
-    }
+    } 
     return this.token;
   }
 

@@ -1,33 +1,18 @@
 ﻿﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { Structure } from '../_models';
-import { AuthenticationService, TokenPayload } from './authentication.service';
-
-var httpOptions;
 
 @Injectable({providedIn: 'root'})
 export class StructureService {
-  constructor(
-    private http: HttpClient,
-    private auth: AuthenticationService) { }
-
+  constructor(private http: HttpClient) { }
 
     private request(method: 'get'|'post', resource): Observable<any> {
-      httpOptions = {
-        headers: new HttpHeaders({
-          'Authorization': 'Bearer '+ this.auth.getToken()
-        })
-      };
-      if (method === 'post') {
-        console.log(httpOptions.headers);
-        return this.http.post(environment.apiUrl + resource, "", httpOptions);
+      if (method === 'post') {        
+        return this.http.post(environment.apiUrl + resource, "");
       } else if (method === 'get') {
-        return this.http.get(environment.apiUrl + resource, httpOptions);
+        return this.http.get(environment.apiUrl + resource);
       }
     }
 
