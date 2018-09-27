@@ -20,7 +20,7 @@ export class StructureService {
       return this.request('post', '/structure');
     }
 
-    public getStructure(id: number): Observable<any> {
+    public getStructure(id: number): Observable<any> {    
       return this.request('get', '/structure/'+id);
     }
 

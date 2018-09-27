@@ -22,7 +22,7 @@ export class StructureComponent implements OnInit {
 
   ngOnInit() {
     this.getStructure();
-    this.getSensors();
+    this.getSensors();    
   }
 
   getStructure(): void {
@@ -34,7 +34,37 @@ export class StructureComponent implements OnInit {
   getSensors(): void {
     const id = +this.route.snapshot.paramMap.get('structure_id');
     this.sensorService.getSensors(id)
-      .subscribe(sensors => this.sensors = sensors.response);
+      .subscribe(sensors => {
+        if (sensors.error) {
+          console.log("Error: ", sensors.error);
+        } else {
+          console.log(sensors.response);
+          sensors.response.forEach(sensor => {
+            console.log(sensor);
+            if (this.sensors.length == 0) {
+              this.sensors.push(sensor);
+            } else {
+              let id = sensor.id;
+              let adv_count = sensor.adv_count;
+              let ale_count = sensor.ale_count;
+              let temp_sensor = this.sensors[this.sensors.length-1];              
+              if (temp_sensor.id == id) {
+                if (temp_sensor['adv_count'] > 0 && temp_sensor['ale_count'] == 0) {
+                  this.sensors[this.sensors.length-1]['ale_count'] = ale_count;
+                } 
+                if (temp_sensor['adv_count'] == 0 && temp_sensor['ale_count'] > 0) {
+                  this.sensors[this.sensors.length-1]['adv_count'] = adv_count;
+                }
+              } else {
+                this.sensors.push(sensor);
+              }
+            }
+          });
+        }
+      },
+      error => {
+        console.log("Error: ", error);
+      }
+    );    
   }
-
 }
