@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     this.structureService.getAll().subscribe(
       structures => {
         if (structures.error) {
-          console.log("Error: ", structures.error )
+          console.log("Error: ", structures.error);
         } else {
           structures.response[0].forEach(structure => {
             if (this.structures.length == 0) {
@@ -48,11 +48,11 @@ export class HomeComponent implements OnInit {
                 this.structures.push(structure);
               }
             }
-          })
+          });
         }
       },
       error => {
-        console.log("Error", error);
+        console.log("Error: ", error);
       }
     );
   }
