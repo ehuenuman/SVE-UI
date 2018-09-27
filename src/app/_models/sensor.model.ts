@@ -15,4 +15,6 @@ export class Sensor {
   type_sensor_model: string;
   type_sensor_unit: string;
   type_sensor_datasheet: string;
+  adv_count: number;
+  ale_count: number;
 }
