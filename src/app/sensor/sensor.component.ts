@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { SensorService } from '../_services';
 
@@ -15,10 +16,11 @@ export class SensorComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private sensorService: SensorService
+    private sensorService: SensorService,
+    private location: Location
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSensor();
   }
 
@@ -26,6 +28,13 @@ export class SensorComponent implements OnInit {
     const structure_id = +this.route.snapshot.paramMap.get('structure_id');
     const sensor_id = +this.route.snapshot.paramMap.get('sensor_id');    
     this.sensorService.getSensor(structure_id, sensor_id)
-      .subscribe(sensor => this.sensor = sensor.response)
+      .subscribe(
+        sensor => this.sensor = sensor.response,
+        error => {
+          if (error === "Not Found") {
+            this.location.back();
+          }
+        }
+      );
   }
 }
