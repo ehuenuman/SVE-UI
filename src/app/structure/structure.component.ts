@@ -33,14 +33,12 @@ export class StructureComponent implements OnInit {
 
   getSensors(): void {
     const id = +this.route.snapshot.paramMap.get('structure_id');
-    this.sensorService.getSensors(id)
+    this.sensorService.getSensorsOfStructure(id)
       .subscribe(sensors => {
         if (sensors.error) {
           console.log("Error: ", sensors.error);
-        } else {
-          console.log(sensors.response);
-          sensors.response.forEach(sensor => {
-            console.log(sensor);
+        } else {          
+          sensors.response.forEach(sensor => {            
             if (this.sensors.length == 0) {
               this.sensors.push(sensor);
             } else {

@@ -14,7 +14,7 @@
           <ul class="list-group list-group list-group-flush">
             <a class="list-group-ite" 
               *ngFor="let sensor of sensors" 
-              [routerLink]="['/sensor', sensor.id]" 
+              [routerLink]="['sensor', sensor.id]" 
               [ngClass]="{'list-group-item-success': sensor.adv_count == 0 && sensor.ale_count == 0, 'list-group-item-warning': sensor.adv_count > 0, 'list-group-item-danger': sensor.ale_count > 0}">
                 {{ sensor.name }}
             </a>
