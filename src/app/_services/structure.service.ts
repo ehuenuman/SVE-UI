@@ -8,16 +8,16 @@ import { environment } from '../../environments/environment';
 export class StructureService {
   constructor(private http: HttpClient) { }
 
-    private request(method: 'get'|'post', resource): Observable<any> {
+    private request(method: 'get'|'post', uri): Observable<any> {
       if (method === 'post') {        
-        return this.http.post(environment.apiUrl + resource, "");
+        return this.http.post(environment.apiUrl + uri, "");
       } else if (method === 'get') {
-        return this.http.get(environment.apiUrl + resource);
+        return this.http.get(environment.apiUrl + uri);
       }
     }
 
     public getAll(): Observable<any> {
-      return this.request('post', '/structure');
+      return this.request('get', '/structure');
     }
 
     public getStructure(id: number): Observable<any> {    
