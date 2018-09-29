@@ -11,7 +11,7 @@ import { Structure, Sensor } from '../_models';
   styleUrls: ['./structure.component.css']
 })
 export class StructureComponent implements OnInit {
-  structure: Structure;
+  structure = new Structure();
   sensors: Sensor[] = [];
 
   constructor(
@@ -38,26 +38,7 @@ export class StructureComponent implements OnInit {
         if (sensors.error) {
           console.log("Error: ", sensors.error);
         } else {          
-          sensors.response.forEach(sensor => {            
-            if (this.sensors.length == 0) {
-              this.sensors.push(sensor);
-            } else {
-              let id = sensor.id;
-              let adv_count = sensor.adv_count;
-              let ale_count = sensor.ale_count;
-              let temp_sensor = this.sensors[this.sensors.length-1];              
-              if (temp_sensor.id == id) {
-                if (temp_sensor['adv_count'] > 0 && temp_sensor['ale_count'] == 0) {
-                  this.sensors[this.sensors.length-1]['ale_count'] = ale_count;
-                } 
-                if (temp_sensor['adv_count'] == 0 && temp_sensor['ale_count'] > 0) {
-                  this.sensors[this.sensors.length-1]['adv_count'] = adv_count;
-                }
-              } else {
-                this.sensors.push(sensor);
-              }
-            }
-          });
+          this.sensors = sensors.response;
         }
       },
       error => {
