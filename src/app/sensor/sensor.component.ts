@@ -12,7 +12,7 @@ import { Sensor } from '../_models';
   styleUrls: ['./sensor.component.css']
 })
 export class SensorComponent implements OnInit {
-  sensor: Sensor;
+  sensor = new Sensor();
 
   constructor(
     private route: ActivatedRoute,
@@ -20,8 +20,8 @@ export class SensorComponent implements OnInit {
     private location: Location
   ) { }
 
-  ngOnInit(): void {
-    this.getSensor();
+  ngOnInit(): void {    
+    this.getSensor();  
   }
 
   getSensor(): void {
@@ -35,6 +35,6 @@ export class SensorComponent implements OnInit {
             this.location.back();
           }
         }
-      );
+      );    
   }
 }
