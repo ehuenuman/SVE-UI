@@ -11,7 +11,7 @@ import { Structure, Sensor } from '../_models';
   styleUrls: ['./structure.component.css']
 })
 export class StructureComponent implements OnInit {
-  structure = new Structure();
+  structure: Structure;
   sensors: Sensor[] = [];
 
   constructor(
