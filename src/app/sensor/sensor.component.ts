@@ -13,6 +13,7 @@ import { Sensor } from '../_models';
 })
 export class SensorComponent implements OnInit {
   sensor = new Sensor();
+  measures_data = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +22,8 @@ export class SensorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {    
-    this.getSensor();  
+    this.getSensor();
+    this.getDataPlot()  
   }
 
   getSensor(): void {
@@ -36,5 +38,16 @@ export class SensorComponent implements OnInit {
           }
         }
       );    
+  }
+
+  getDataPlot(): void {
+    const sensor_id = +this.route.snapshot.paramMap.get('sensor_id');
+    this.sensorService.getDataSensor(sensor_id, 500)
+      .subscribe(
+        response => this.measures_data = response.data,
+        error => {
+          console.log(error);
+        }
+      );
   }
 }
