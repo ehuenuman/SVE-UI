@@ -33,4 +33,15 @@ export class SensorService {
     public getSensor(structure_id: number, sensor_id: number): Observable<any> {
       return this.request('get', '/structure/' + structure_id + '/sensor/' + sensor_id);
     }
+
+    /**
+     * Realiza una consulta POST solicitando la información del sensor
+     * y sus datos para poder realizar el gráfico.
+     * @param sensor_id - identificador del sensor.
+     * @param limit_data - límite de datos que se esperan como respuesta.
+     */
+
+    public getDataSensor(sensor_id: number, limit_data: number): Observable<any> {
+      return this.request('post', '/sensor', {'id': sensor_id, 'limit': limit_data});
+    }
 }
