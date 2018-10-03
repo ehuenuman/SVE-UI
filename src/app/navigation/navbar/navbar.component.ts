@@ -9,7 +9,7 @@ import { User } from '../../_models/user.model';
 })
 export class NavbarComponent implements OnInit {
 
-  private currentUser: User;
+  currentUser: User;
 
   constructor(
     public auth: AuthenticationService

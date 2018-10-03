@@ -8,8 +8,8 @@ import { StructureService, AuthenticationService } from '../_services';
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {
 
-  private structures: Structure[] = [];
-  private currentUser: User;
+  structures: Structure[] = [];
+  currentUser: User;
 
   constructor(
     private auth: AuthenticationService,
