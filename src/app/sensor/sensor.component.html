@@ -10,10 +10,23 @@
         <div>Mediciones en tiempo real</div>
         <div class="btn btn-primary btn-sm">Avanzado</div>
       </div>
-      <div class="card-body d-flex">
-        <div class="col">              
-          Gráfico
-        </div>        
+      <div class="card-body d-flex">        
+        <plotly-plot class="col-sm-12" *ngIf="graph" [data]="graph.data" [layout]="graph.layout"></plotly-plot>        
+        <!--
+          <div class="col-sm-12" *ngIf="measures_data" style="font-size: 13px">
+          <div class="col-sm-6">
+            Umbrales:<br>
+            <span>Aviso: {{measures_data.thresholds.adv1.value}} {{sensor.type_sensor_unit}} y {{measures_data.thresholds.adv2.value}} {{sensor.type_sensor_unit}}</span>
+            <br>
+            <span>Alerta: {{measures_data.thresholds.ale1.value}} {{sensor.type_sensor_unit}} y {{measures_data.thresholds.ale2.value}} {{sensor.type_sensor_unit}}</span>
+          </div>
+          <div class="col-sm-6">
+            Historicos:<br>
+            <span>Max: {{measures_data.historical.maxValue.value}} {{sensor.type_sensor_unit}} el {{measures_data.historical.maxValue.timestamp}}</span>
+            <br>
+            <span>Min: {{measures_data.historical.minValue.value}} {{sensor.type_sensor_unit}} el {{measures_data.historical.minValue.timestamp}}</span>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
