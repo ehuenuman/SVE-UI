@@ -21,7 +21,9 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { NavbarComponent } from './navigation/navbar/navbar.component';
 import { StructureComponent } from './structure/structure.component';
-import { SensorComponent } from './sensor/sensor.component'
+import { SensorComponent } from './sensor/sensor.component';
+
+import { PlotlyModule } from 'angular-plotly.js';
 
 @NgModule({
   imports: [
@@ -30,7 +32,8 @@ import { SensorComponent } from './sensor/sensor.component'
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
+    PlotlyModule
   ],
   declarations: [
     AppComponent,
