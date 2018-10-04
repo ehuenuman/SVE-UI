@@ -13,17 +13,18 @@ import { Sensor } from '../_models';
 })
 export class SensorComponent implements OnInit {
   sensor = new Sensor();
+  measures_data;
   graph;
 
   constructor(
     private route: ActivatedRoute,
     private sensorService: SensorService,
     private location: Location
-    ) { }
-    
+  ) { }
+
   ngOnInit(): void {    
-    this.renderPlot();
     this.getSensor();
+    this.renderPlot()  
   }
 
   getSensor(): void {
@@ -45,103 +46,102 @@ export class SensorComponent implements OnInit {
     this.sensorService.getDataSensor(sensor_id, 500)
       .subscribe(
         response => {
-          const measures_data = response.response;
+          this.measures_data = response.response;
           
-          if (measures_data.length > 0 ) {
-            var trace1 = {
-              type: "scatter",
-              mode: "lines+markers",
-              name: this.sensor.name,         
-              x: measures_data.xAxis,
-              y: measures_data.yAxis,
-              line: { color: '#7f7f7f'}
-            }
-
-            this.graph = {
-              data: [trace1],
-              layout: {               
-                title: "Valores obtenidos por " + this.sensor.name,
-                showlegend: true,
-                legend: { 
-                  "x": 0,
-                  "y": 1.15,
-                  "orientation": "h" },
-                yaxis: { title: this.sensor.type_sensor_unit },
-                shapes: [
-                  {
-                    type: 'rect',
-                    xref: 'paper',
-                    yref: 'y',
-                    x0: 0,
-                    y0: measures_data.thresholds.adv1.value,
-                    x1: 1,
-                    y1: measures_data.thresholds.ale1.value,
-                    fillcolor: measures_data.thresholds.adv1.type_threshold_color,
-                    opacity: 0.5,
-                    line: {
-                      width: 0
-                    }
-                  },
-                  {
-                    type: 'rect',
-                    xref: 'paper',
-                    yref: 'y',
-                    x0: 0,
-                    y0: measures_data.thresholds.adv2.value,
-                    x1: 1,
-                    y1: measures_data.thresholds.ale2.value,
-                    fillcolor: measures_data.thresholds.adv2.type_threshold_color,
-                    opacity: 0.5,
-                    line: {
-                      width: 0
-                    }
-                  },
-                  {
-                    type: 'rect',
-                    xref: 'paper',
-                    yref: 'y',
-                    x0: 0,
-                    y0: measures_data.historical.minValue.value,
-                    x1: 1,
-                    y1: measures_data.thresholds.ale1.value,
-                    fillcolor: measures_data.thresholds.ale1.type_threshold_color,
-                    opacity: 0.5,
-                    line: {
-                      width: 0
-                    }
-                  },
-                  {
-                    type: 'rect',
-                    xref: 'paper',
-                    yref: 'y',
-                    x0: 0,
-                    y0: measures_data.thresholds.ale2.value,
-                    x1: 1,
-                    y1: measures_data.historical.maxValue.value,
-                    fillcolor: measures_data.thresholds.ale1.type_threshold_color,
-                    opacity: 0.5,
-                    line: {
-                      width: 0
-                    }
-                  },
-                  {
-                    type: 'rect',
-                    xref: 'paper',
-                    yref: 'y',
-                    x0: 0,
-                    y0: measures_data.thresholds.adv1.value,
-                    x1: 1,
-                    y1: measures_data.thresholds.adv2.value,
-                    fillcolor: '#0f8e0f',
-                    opacity: 0.5,
-                    line: {
-                      width: 0
-                    }
-                  }
-                ]
-              }
-            };
+          var trace1 = {
+            type: "scatter",
+            mode: "lines+markers",
+            name: this.sensor.name,         
+            x: this.measures_data.xAxis,
+            y: this.measures_data.yAxis,
+            line: { color: '#7f7f7f'}
           }
+
+          this.graph = {
+            data: [trace1],
+            layout: {               
+              title: "Valores obtenidos por " + this.sensor.name,
+              showlegend: true,
+              legend: { 
+                "x": 0,
+                "y": 1.15,
+                "orientation": "h" },
+              yaxis: { 
+                title: this.sensor.type_sensor_unit                
+              },
+              shapes: [
+                { // Advertencia superior
+                  type: 'rect',
+                  xref: 'paper',
+                  yref: 'y',
+                  x0: 0,
+                  y0: this.measures_data.thresholds.adv1.value,
+                  x1: 1,
+                  y1: this.measures_data.thresholds.ale1.value,
+                  fillcolor: this.measures_data.thresholds.adv1.type_threshold_color,
+                  opacity: 0.5,
+                  line: {
+                    width: 0
+                  }
+                },
+                { // Advertencia inferior
+                  type: 'rect',
+                  xref: 'paper',
+                  yref: 'y',
+                  x0: 0,
+                  y0: this.measures_data.thresholds.ale2.value,
+                  x1: 1,
+                  y1: this.measures_data.thresholds.adv2.value,
+                  fillcolor: this.measures_data.thresholds.adv2.type_threshold_color,
+                  opacity: 0.5,
+                  line: {
+                    width: 0
+                  }
+                },
+                { // Alerta inferior
+                  type: 'rect',
+                  xref: 'paper',
+                  yref: 'y',
+                  x0: 0,
+                  y0: (this.measures_data.historical.minValue < this.measures_data.thresholds.ale1.value) ? this.measures_data.historical.minValue - 3 : this.measures_data.thresholds.ale1.value - 3,
+                  x1: 1,
+                  y1: this.measures_data.thresholds.ale1.value,
+                  opacity: 0.5,
+                  line: {
+                    width: 0
+                  }
+                },
+                { // Alerta superior
+                  type: 'rect',
+                  xref: 'paper',
+                  yref: 'y',
+                  x0: 0,
+                  y0: this.measures_data.thresholds.ale2.value,
+                  x1: 1,
+                  y1: (this.measures_data.historical.maxValue > this.measures_data.thresholds.ale2.value) ? this.measures_data.historical.maxValue + 3 : this.measures_data.thresholds.ale2.value + 3,
+                  fillcolor: this.measures_data.thresholds.ale2.type_threshold_color,
+                  opacity: 0.5,
+                  line: {
+                    width: 0
+                  }
+                },
+                { // Zona segura
+                  type: 'rect',
+                  xref: 'paper',
+                  yref: 'y',
+                  x0: 0,
+                  y0: this.measures_data.thresholds.adv1.value,
+                  x1: 1,
+                  y1: this.measures_data.thresholds.adv2.value,
+                  fillcolor: '#0f8e0f',
+                  opacity: 0.5,
+                  line: {
+                    width: 0
+                  }
+                }
+              ]
+            }
+          };
         },
         error => {
           console.log(error);
