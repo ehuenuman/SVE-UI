@@ -2,7 +2,8 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api",
-      "/static"    
+      "/static",
+      "/sockjs-node"
     ],
     "target": "http://localhost:80",
     "secure": false
