@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { SensorService } from '../_services';
 
 import { Sensor } from '../_models';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-sensor',
@@ -14,18 +13,17 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class SensorComponent implements OnInit {
   sensor = new Sensor();
-  measures_data;
   graph;
 
   constructor(
     private route: ActivatedRoute,
     private sensorService: SensorService,
     private location: Location
-  ) { }
-
+    ) { }
+    
   ngOnInit(): void {    
+    this.renderPlot();
     this.getSensor();
-    this.renderPlot()  
   }
 
   getSensor(): void {
@@ -47,15 +45,15 @@ export class SensorComponent implements OnInit {
     this.sensorService.getDataSensor(sensor_id, 500)
       .subscribe(
         response => {
-          this.measures_data = response.response;
+          const measures_data = response.response;
           
-          if (this.measures_data.length > 0 ) {
+          if (measures_data.length > 0 ) {
             var trace1 = {
               type: "scatter",
               mode: "lines+markers",
               name: this.sensor.name,         
-              x: this.measures_data.xAxis,
-              y: this.measures_data.yAxis,
+              x: measures_data.xAxis,
+              y: measures_data.yAxis,
               line: { color: '#7f7f7f'}
             }
 
@@ -75,10 +73,10 @@ export class SensorComponent implements OnInit {
                     xref: 'paper',
                     yref: 'y',
                     x0: 0,
-                    y0: this.measures_data.thresholds.adv1.value,
+                    y0: measures_data.thresholds.adv1.value,
                     x1: 1,
-                    y1: this.measures_data.thresholds.ale1.value,
-                    fillcolor: this.measures_data.thresholds.adv1.type_threshold_color,
+                    y1: measures_data.thresholds.ale1.value,
+                    fillcolor: measures_data.thresholds.adv1.type_threshold_color,
                     opacity: 0.5,
                     line: {
                       width: 0
@@ -89,10 +87,10 @@ export class SensorComponent implements OnInit {
                     xref: 'paper',
                     yref: 'y',
                     x0: 0,
-                    y0: this.measures_data.thresholds.adv2.value,
+                    y0: measures_data.thresholds.adv2.value,
                     x1: 1,
-                    y1: this.measures_data.thresholds.ale2.value,
-                    fillcolor: this.measures_data.thresholds.adv2.type_threshold_color,
+                    y1: measures_data.thresholds.ale2.value,
+                    fillcolor: measures_data.thresholds.adv2.type_threshold_color,
                     opacity: 0.5,
                     line: {
                       width: 0
@@ -103,10 +101,10 @@ export class SensorComponent implements OnInit {
                     xref: 'paper',
                     yref: 'y',
                     x0: 0,
-                    y0: this.measures_data.historical.minValue.value,
+                    y0: measures_data.historical.minValue.value,
                     x1: 1,
-                    y1: this.measures_data.thresholds.ale1.value,
-                    fillcolor: this.measures_data.thresholds.ale1.type_threshold_color,
+                    y1: measures_data.thresholds.ale1.value,
+                    fillcolor: measures_data.thresholds.ale1.type_threshold_color,
                     opacity: 0.5,
                     line: {
                       width: 0
@@ -117,10 +115,10 @@ export class SensorComponent implements OnInit {
                     xref: 'paper',
                     yref: 'y',
                     x0: 0,
-                    y0: this.measures_data.thresholds.ale2.value,
+                    y0: measures_data.thresholds.ale2.value,
                     x1: 1,
-                    y1: this.measures_data.historical.maxValue.value,
-                    fillcolor: this.measures_data.thresholds.ale1.type_threshold_color,
+                    y1: measures_data.historical.maxValue.value,
+                    fillcolor: measures_data.thresholds.ale1.type_threshold_color,
                     opacity: 0.5,
                     line: {
                       width: 0
@@ -131,9 +129,9 @@ export class SensorComponent implements OnInit {
                     xref: 'paper',
                     yref: 'y',
                     x0: 0,
-                    y0: this.measures_data.thresholds.adv1.value,
+                    y0: measures_data.thresholds.adv1.value,
                     x1: 1,
-                    y1: this.measures_data.thresholds.adv2.value,
+                    y1: measures_data.thresholds.adv2.value,
                     fillcolor: '#0f8e0f',
                     opacity: 0.5,
                     line: {
