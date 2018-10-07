@@ -58,7 +58,7 @@ export class AuthenticationService {
     let payload;
     if (token) {
       payload = token.split('.')[1];
-      payload = window.atob(payload);
+      payload = this.b64DecodeUnicode(payload);
       //console.log(JSON.parse(payload));
       return JSON.parse(payload);
     } else {
@@ -110,4 +110,11 @@ export class AuthenticationService {
     this.router.navigateByUrl('/');
   }
 
+  private b64DecodeUnicode(str) {
+    return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
+  }
+
 }
+
