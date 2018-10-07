@@ -109,7 +109,21 @@ export class AuthenticationService {
     window.localStorage.removeItem('mean-token');
     this.router.navigateByUrl('/');
   }
+  
+  /**
+   * Codifica UTF-8 a Base64.
+   * @param str - cadena en utf-8 a codificar.
+   */
+  private b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+        return String.fromCharCode(parseInt(p1, 16))
+    }))
+  }
 
+  /**
+   * Decodificador de Base64 a UTF-8.
+   * @param str - cadena en base64 a decodificar.
+   */
   private b64DecodeUnicode(str) {
     return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
