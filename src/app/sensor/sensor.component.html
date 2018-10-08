@@ -10,42 +10,83 @@
         <div>Mediciones en tiempo real</div>
         <div class="btn btn-primary btn-sm">Avanzado</div>
       </div>
-      <div class="card-body d-flex">        
-        <plotly-plot class="col-sm-12" *ngIf="graph" [data]="graph.data" [layout]="graph.layout"></plotly-plot>        
-        <!--
-          <div class="col-sm-12" *ngIf="measures_data" style="font-size: 13px">
-          <div class="col-sm-6">
-            Umbrales:<br>
-            <span>Aviso: {{measures_data.thresholds.adv1.value}} {{sensor.type_sensor_unit}} y {{measures_data.thresholds.adv2.value}} {{sensor.type_sensor_unit}}</span>
-            <br>
-            <span>Alerta: {{measures_data.thresholds.ale1.value}} {{sensor.type_sensor_unit}} y {{measures_data.thresholds.ale2.value}} {{sensor.type_sensor_unit}}</span>
+      <div class="card-body d-flex flex-column">        
+        <plotly-plot *ngIf="graph" [data]="graph.data" [layout]="graph.layout"></plotly-plot>                
+        <div class="d-flex justify-content-center" *ngIf="measures_data" style="font-size: 13px">
+          <div class="resume-plot-data">
+            <span class="title">Umbrales</span><br>
+            <div>
+              <span class="subtitle">Aviso: </span>
+              <span class="data">
+                {{measures_data.thresholds.adv1.value}}{{sensor.type_sensor_unit}} y {{measures_data.thresholds.adv2.value}}{{sensor.type_sensor_unit}}
+              </span>
+            </div>
+            <div>
+              <span class="subtitle">Alerta: </span>
+              <span class="data">
+                {{measures_data.thresholds.ale1.value}}{{sensor.type_sensor_unit}} y {{measures_data.thresholds.ale2.value}}{{sensor.type_sensor_unit}}
+              </span>
+            </div>            
           </div>
-          <div class="col-sm-6">
-            Historicos:<br>
-            <span>Max: {{measures_data.historical.maxValue.value}} {{sensor.type_sensor_unit}} el {{measures_data.historical.maxValue.timestamp}}</span>
-            <br>
-            <span>Min: {{measures_data.historical.minValue.value}} {{sensor.type_sensor_unit}} el {{measures_data.historical.minValue.timestamp}}</span>
+          <div class="resume-plot-data">
+            <span class="title">Historicos</span><br>
+            <div>
+              <span class="subtitle">Max: </span>
+              <span class="data">
+                  {{measures_data.historical.maxValue.value}}{{sensor.type_sensor_unit}} el {{measures_data.historical.maxValue.timestamp | date : "medium"}}
+              </span>
+            </div>
+            <div>
+              <span class="subtitle">Min: </span>
+              <span class="data">
+                {{measures_data.historical.minValue.value}}{{sensor.type_sensor_unit}} el {{measures_data.historical.minValue.timestamp | date : "medium"}}
+              </span>
+            </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
   
   <div class="d-flex mb-4">
-      <div class="card shadow-sm flex-fill">
-        <div class="card-header">
-          <div>Información</div>
-        </div>
-        <div class="card-body">
-          <div class="d-flex flex-column">
-            <img src="../../assets/sensor.png" class="rounded mx-auto d-block" width="100%" alt="">
-            <ul class="list-group list-group-flush">            
-              <li class="list-group-item">Fecha instalación</li>             
-              <li class="list-group-item">Comentario</li>
-            </ul>          
+    <div class="card shadow-sm flex-fill">
+      <div class="card-header">
+        Detalles del sensor
+      </div>
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="col-sm-4">
+            <ul class="list-group list-group-flush general-info">              
+              <li class="list-group-item info-item">
+                <span class="info-title">Instalado el</span><br>
+                <span class="info-data">{{ sensor.installation_date | date : 'fullDate' }}</span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title">Tipo de sensor </span><br>
+                <span class="info-data">{{ sensor.type_sensor_name }}</span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title">Modelo</span><br>
+                <span class="info-data">{{ sensor.type_sensor_model }}</span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title">Unidad de medida</span><br>
+                <span class="info-data">{{ sensor.type_sensor_unit }}</span>
+              </li>
+              <li class="list-group-item info-item" [hidden]="!sensor.commentary">
+                <span class="info-title">Comentario</span><br>
+                <span class="info-data">{{ sensor.commentary }}</span>
+              </li>            
+            </ul>
           </div>
-        </div>      
+          <div class="col">
+            <div>
+              <img src="/static/images/sensor/{{ sensor.photo }}" width="100%" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </div>  
   
 </div>
