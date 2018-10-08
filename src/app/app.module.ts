@@ -1,8 +1,10 @@
-﻿import { NgModule }      from '@angular/core';
-import { CommonModule } from '@angular/common';
+﻿import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import localeCL from '@angular/common/locales/es-CL';
+registerLocaleData(localeCL, 'es-CL');
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule }   from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent }  from './app.component';
 import { routing }       from './app.routing';
@@ -53,6 +55,7 @@ import { PlotlyModule } from 'angular-plotly.js';
     StructureService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es-CL'}
   ],
   bootstrap: [AppComponent]
 })
