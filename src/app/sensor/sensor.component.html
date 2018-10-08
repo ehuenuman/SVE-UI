@@ -81,7 +81,7 @@
           </div>
           <div class="col">
             <div>
-              <img src="/static/images/sensor/{{ sensor.photo }}" width="100%" alt="">
+              <img *ngIf="sensor.photo" src="/static/images/sensor/{{ sensor.photo }}" width="100%" alt="">
             </div>
           </div>
         </div>
