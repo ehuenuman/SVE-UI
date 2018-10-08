@@ -106,6 +106,7 @@ export class SensorComponent implements OnInit {
                   y0: (this.measures_data.historical.minValue < this.measures_data.thresholds.ale1.value) ? this.measures_data.historical.minValue - 3 : this.measures_data.thresholds.ale1.value - 3,
                   x1: 1,
                   y1: this.measures_data.thresholds.ale1.value,
+                  fillcolor: this.measures_data.thresholds.ale1.type_threshold_color,
                   opacity: 0.5,
                   line: {
                     width: 0
