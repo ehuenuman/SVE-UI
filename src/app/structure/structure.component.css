@@ -1,0 +1,16 @@
+ul.general-info {
+  font-size: 13px;
+}
+
+ul.general-info
+li.info-item
+span.info-title {
+  font-weight: bold;
+  font-style: italic;
+}
+
+ul.general-info
+li.info-item
+span.info-data {  
+  font-size: 1rem;
+}
