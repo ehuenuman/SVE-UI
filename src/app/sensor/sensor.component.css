@@ -1,0 +1,31 @@
+ul.general-info {
+  font-size: 13px;
+}
+
+ul.general-info
+li.info-item
+span.info-title {
+  font-weight: bold;
+  font-style: italic;
+}
+
+ul.general-info
+li.info-item
+span.info-data {  
+  font-size: 1rem;
+}
+
+div.resume-plot-data {
+  margin: 5px;
+}
+
+div.resume-plot-data
+span.title {
+  font-weight: bold;  
+}
+
+div.resume-plot-data
+span.subtitle {
+  font-style: italic;
+  font-weight: bold;
+}
