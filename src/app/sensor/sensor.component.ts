@@ -43,22 +43,37 @@ export class SensorComponent implements OnInit {
 
   renderPlot(): void {
     const sensor_id = +this.route.snapshot.paramMap.get('sensor_id');
-    this.sensorService.getDataSensor(sensor_id, 500)
+    this.sensorService.getDataSensor(sensor_id, 600)
       .subscribe(
         response => {
           this.measures_data = response.response;
           
-          var trace1 = {
-            type: "scatter",
-            mode: "lines+markers",
-            name: this.sensor.name,         
-            x: this.measures_data.xAxis,
-            y: this.measures_data.yAxis,
-            line: { color: '#7f7f7f'}
+          var data = [];
+
+          if ( this.measures_data.xAxis && this.measures_data.yAxis ) {
+            var trace1 = {
+              type: "scatter",
+              mode: "lines+markers",
+              name: this.sensor.name,         
+              x: this.measures_data.xAxis,
+              y: this.measures_data.yAxis,
+              line: { color: '#7f7f7f'}
+            }
+
+            data.push(trace1);
+          }
+
+          // Si no existen historicos se remplazan por el límite de la alerta.
+          if ( !this.measures_data.historical ) {
+            var minValue = this.measures_data.thresholds.ale1.value;
+            var maxValue = this.measures_data.thresholds.ale2.value;
+          } else {
+            var minValue = this.measures_data.historical.minValue;
+            var maxValue = this.measures_data.historical.maxValue;
           }
 
           this.graph = {
-            data: [trace1],
+            data: data,
             layout: {               
               title: "Valores obtenidos por " + this.sensor.name,
               showlegend: true,
@@ -103,7 +118,7 @@ export class SensorComponent implements OnInit {
                   xref: 'paper',
                   yref: 'y',
                   x0: 0,
-                  y0: (this.measures_data.historical.minValue < this.measures_data.thresholds.ale1.value) ? this.measures_data.historical.minValue - 3 : this.measures_data.thresholds.ale1.value - 3,
+                  y0: (minValue < this.measures_data.thresholds.ale1.value) ? minValue - 3 : this.measures_data.thresholds.ale1.value - 3,
                   x1: 1,
                   y1: this.measures_data.thresholds.ale1.value,
                   fillcolor: this.measures_data.thresholds.ale1.type_threshold_color,
@@ -119,7 +134,7 @@ export class SensorComponent implements OnInit {
                   x0: 0,
                   y0: this.measures_data.thresholds.ale2.value,
                   x1: 1,
-                  y1: (this.measures_data.historical.maxValue > this.measures_data.thresholds.ale2.value) ? this.measures_data.historical.maxValue + 3 : this.measures_data.thresholds.ale2.value + 3,
+                  y1: (maxValue > this.measures_data.thresholds.ale2.value) ? maxValue + 3 : this.measures_data.thresholds.ale2.value + 3,
                   fillcolor: this.measures_data.thresholds.ale2.type_threshold_color,
                   opacity: 0.5,
                   line: {
