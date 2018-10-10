@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
         if (structures.error) {
           console.log("Error: ", structures.error);
         } else {
-          structures.response[0].forEach(structure => {
+          structures.response.forEach(structure => {
             if (this.structures.length == 0) {
               this.structures.push(structure);
             } else {
