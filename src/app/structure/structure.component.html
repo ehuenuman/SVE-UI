@@ -59,7 +59,7 @@
           </div>
           <div class="col">
             <div>
-              <img src="/static/images/maps/mapa{{ structure.photo }}" width="100%" alt="">
+              <img *ngIf="structure.photo" src="/static/images/maps/mapa{{ structure.photo }}" width="100%" alt="">
             </div>
           </div>
         </div>
