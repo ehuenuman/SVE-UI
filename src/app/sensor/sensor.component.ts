@@ -43,7 +43,8 @@ export class SensorComponent implements OnInit {
 
   renderPlot(): void {
     const sensor_id = +this.route.snapshot.paramMap.get('sensor_id');
-    this.sensorService.getDataSensor(sensor_id, 600)
+    const structure_id = +this.route.snapshot.paramMap.get('structure_id');
+    this.sensorService.getDataSensor(sensor_id, 600, structure_id)
       .subscribe(
         response => {
           this.measures_data = response.response;

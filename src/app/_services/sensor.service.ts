@@ -41,7 +41,7 @@ export class SensorService {
      * @param limit_data - límite de datos que se esperan como respuesta.
      */
 
-    public getDataSensor(sensor_id: number, limit_data: number): Observable<any> {
-      return this.request('post', '/sensor', {'id': sensor_id, 'limit': limit_data});
+    public getDataSensor(sensor_id: number, limit_data: number, structure_id: number): Observable<any> {
+      return this.request('post', '/sensor', {'id': sensor_id, 'structure_id': structure_id, 'limit': limit_data});
     }
 }
