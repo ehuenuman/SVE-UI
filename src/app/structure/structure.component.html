@@ -1,0 +1,69 @@
+<app-navbar></app-navbar>
+<div class="content col-xxl-6 offset-xxl-3 col-xl-8 offset-xl-2">
+  <div class="d-flex justify-content-center mb-4">
+    <h2>{{ structure.name }}</h2>
+  </div>
+
+  <div class="d-flex mb-4">
+    <div class="card shadow-sm flex-fill">
+      <div class="card-header">
+        Sensores instalados en la estructura
+      </div>
+      <div class="card-body d-flex">      
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action"
+            *ngFor="let sensor of sensors"
+            [routerLink]="['sensor', sensor.id]"
+            [ngClass]="{
+              'list-group-item-success': sensor.adv_count == 0 && sensor.ale_count == 0, 
+              'list-group-item-warning': sensor.adv_count > 0, 
+              'list-group-item-danger': sensor.ale_count > 0
+            }">              
+              {{ sensor.name }}
+          </a>              
+        </div>
+        <div class="col">
+          <img *ngIf="structure.photo" src="/static/images/structure/{{ structure.photo }}" class="rounded mx-auto d-block" width="100%" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex mb-4">
+    <div class="card shadow-sm flex-fill">
+      <div class="card-header">
+        Detalles de la estructura
+      </div>
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="col-sm-4">
+            <ul class="list-group list-group-flush general-info">              
+              <li class="list-group-item info-item">
+                <span class="info-title">Monitoreado desde</span><br>
+                <span class="info-data">{{ structure.date_joined | date : 'fullDate' }}</span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title"> Largo </span><br>
+                <span class="info-data">{{ structure.length }} metros</span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title"> Ancho</span><br>
+                <span class="info-data">{{ structure.width }} metros </span>
+              </li>
+              <li class="list-group-item info-item">
+                <span class="info-title">Ubicación</span><br>
+                <span class="info-data">Ruta {{ structure.route }}, km {{ structure.km }}</span>
+              </li>
+              <li [hidden]="!structure.commentary" class="list-group-item">Comentario: {{structure.commentary}}</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div>
+              <img *ngIf="structure.photo" src="/static/images/maps/mapa{{ structure.photo }}" width="100%" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
